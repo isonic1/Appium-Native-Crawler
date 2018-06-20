@@ -1,0 +1,48 @@
+//Open in Firefox... or create http-server > https://stackoverflow.com/questions/20041656/xmlhttprequest-cannot-load-file-cross-origin-requests-are-only-supported-for-ht
+!!!
+%html
+  %head
+    %meta{charset: 'UTF-8'}
+    %script{type: 'text/javascript', src: 'https://www.google.com/jsapi'}
+    %script{type: 'text/javascript', src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'}
+    :javascript
+      google.load('visualization', '1', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+          var jsonData = $.ajax({
+              url: data_path(),
+              dataType:"json",
+              async: false
+          }).responseText;
+
+          // Create our data table out of JSON data loaded from server.
+          var data = new google.visualization.DataTable(jsonData);
+          
+          var options = {
+               title: "#{title}",
+               width: #{graph_settings[:width]},
+               height: #{graph_settings[:height]},
+               pointSize: 15,
+               pointShape: { type: 'triangle', rotation: 180 },
+               hAxis: {title: 'Time', titleTextStyle: {color: '#333'}, slantedText:true, slantedTextAngle:80},
+               vAxis: {minValue: 0},
+               explorer: { actions: ['dragToZoom', 'rightClickToReset'], axis: 'horizontal', keepInBounds: true, maxZoomIn: 4.0},
+               tooltip:{isHtml:true}
+          };
+						  
+          // Instantiate and draw our chart, passing in some options.
+          var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+          chart.draw(data, options);
+      }
+
+      function data_path() {
+          return '#{data_file_path}';
+      }
+
+    %title #{title}
+  %body
+    %h1 #{header1}
+    %div{id: 'chart_div'}
