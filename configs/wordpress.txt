@@ -1,0 +1,62 @@
+[caps]
+    platformName      = "ANDROID"
+    platform          = "android"
+    deviceName        = "android"
+    newCommandTimeout = "9999"
+    app               = "sample_apps/WordPress-vanilla-debug.apk"
+    zippedApp        = "sample_apps/WordPress-vanilla-debug.apk.zip"
+    url               = "http://localhost:4723/wd/hub"
+    appPackage        = "org.wordpress.android"
+    appActivity       = ".ui.main.WPMainActivity"
+    locale            = "en_US"
+
+#(choices: saucelabs or browserstack)
+[cloud]
+    service   = "" #(choices: saucelabs or browserstack)
+    user      = ""
+    key       = ""
+    caps_path = "configs/sauce-caps.txt"
+
+[settings]
+    click_count  = 3
+
+#set the landing/home view activity
+[homeActivity]
+    activity = ".ui.main.WPMainActivity"
+
+#Locator to tell crawler it can click to go back if needed.
+[[backLocators]]
+    [backLocators.navigateUp]
+        id = 'Navigate up'
+
+#Tells the crawler which locators it can click repeatably...
+[[multiClickLocators]]
+    [multiClickLocators.navigateUp]
+        id = 'Navigate up'
+
+#Specify login parameters if app has login. Set login activity and steps. Uncomment the below...
+[[loginPage]]
+    activity = ".ui.accounts.LoginActivity"
+    maxWaitBetweenSteps = 10 #seconds to wait until login step element is displayed
+    steps = [
+        [ 'click', 'id',     'org.wordpress.android:id/login_button' ],
+        [ 'enter', 'class', 'android.widget.EditText', 'appiumautomatedtester@gmail.com' ],
+        [ 'click', 'id',    'org.wordpress.android:id/primary_button' ],
+        [ 'click', 'id',    'org.wordpress.android:id/login_enter_password' ],
+        [ 'enter', 'class', 'android.widget.EditText', 'appium123!' ],
+        [ 'click', 'id',    'org.wordpress.android:id/primary_button' ],
+        [ 'click', 'id',    'org.wordpress.android:id/primary_button' ],
+        [ 'click', 'id',    'org.wordpress.android:id/promo_dialog_button_negative' ],
+        [ 'click', 'id',    'My Site. View your site and manage it, including stats.' ]
+    ]
+
+#Tells the crawler to never click this locator
+[[doNotClick]]
+    [doNotClick.logout]
+        id = 'org.wordpress.android:id/me_login_logout_text_view'
+    [doNotClick.logout2]
+        id = 'org.wordpress.android:id/row_logout'
+
+#Set the API Key, loctor strategy (id, class, etc...), locator value and text that appears on the view.
+[applitools]
+key  = ""

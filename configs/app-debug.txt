@@ -1,0 +1,84 @@
+#Set your device capabilities here. These will be used for a cloud provider you use along with your cloud caps defined in [cloud] section.
+#Make sure you zip the app and specify the location below in a zippedApp capability, if running on a cloud provider...
+[caps]
+    platformName      = "ANDROID"
+    platform          = "android"
+    deviceName        = "android"
+    app               = "sample_apps/app-debug.apk"
+    zippedApp         = "sample_apps/app-debug.apk.zip"
+    url               = "http://localhost:4723/wd/hub"
+    appPackage        = "com.amazonaws.devicefarm.android.referenceapp"
+    newCommandTimeout = "9999"
+    locale            = "en_US"
+
+#(choices: saucelabs or browserstack. Add your user, key, and capabilities file location here...)
+[cloud]
+    service   = ""
+    user      = ""
+    key       = ""
+    caps_path = "configs/sauce-caps.txt"
+
+#settings(ToDo: add screenshot and report settings. click_count is how many times a single element can be clicked, then ignored.
+[settings]
+    click_count    = 3
+
+#set the landing/home view activity
+[homeActivity]
+    activity = ".Activities.MainActivity"
+
+#Locator to tell crawler it can click to go back if needed.
+[[backLocators]]
+    [backLocators.hamburger_button]
+        id = 'ReferenceApp'
+
+#Tells the crawler which locators it can click repeatably...
+[[multiClickLocators]]
+    [multiClickLocators.hamburger_button]
+        id = 'ReferenceApp'
+
+#Specify login parameters if app has login. Set login activity and steps. Uncomment the below... See wordpress.txt for further example
+[loginPage]
+    #activity = ".ui.accounts.LoginActivity"
+    #maxWaitBetweenSteps = 10 #seconds to wait until login step element is displayed
+    #steps = [
+    #    [ 'click', 'id',    'locator_value' ],
+    #    [ 'enter', 'class', 'locator_value', 'string_to_enter' ],
+    #    [ 'click', 'id',    'locator_value' ],
+    #    [ 'click', 'id',    'locator_value' ],
+    #    [ 'enter', 'class', 'locator_value', 'string_to_enter' ],
+    #    [ 'click', 'id',    'locator_value' ],
+    #    [ 'click', 'id',    'locator_value' ],
+    #    [ 'click', 'id',    'locator_value' ],
+    #    [ 'click', 'id',    'locator_value' ]
+    #]
+
+#Tells the crawler to never click this locator
+[[doNotClick]]
+    [doNotClick.crash_button]
+        id = 'com.amazonaws.devicefarm.android.referenceapp:id/crash_button'
+
+#Set the API Key, loctor strategy (id, xpath, class, etc...), locator value and text that appears on the view.
+[[applitools]]
+    key = ""
+    [applitools.do_not_upload]
+        id = 'com.amazonaws.devicefarm.android.referenceapp:id/drawer_row_icon'
+    [applitools.home_page]
+        activity =  '.Activities.MainActivity'
+        id = 'Homepage Headline'
+        text = 'Homepage'
+    [applitools.component_page]
+        activity = '.Activities.MainActivity'
+        id = 'com.amazonaws.devicefarm.android.referenceapp:id/native_image_grid_view'
+        text = 'Native Components'
+    [applitools.alert_page]
+        activity = '.Activities.MainActivity'
+        id = 'com.amazonaws.devicefarm.android.referenceapp:id/notifications_alert_button'
+        text = 'ALERT'
+    [applitools.alert_popup]
+        activity = '.Activities.MainActivity'
+        id = 'android:id/alertTitle'
+        text = 'Alert Title'
+    [applitools.navigation_page]
+        activity = '.Activities.BackNavigationActivity'
+        id = 'com.amazonaws.devicefarm.android.referenceapp:id/back_navigation_counter'
+        text = '2'
