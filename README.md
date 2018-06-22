@@ -134,7 +134,8 @@ I have only tested this on OSX and Linux environments but it will need some refa
 * See [toml-rb](https://github.com/emancu/toml-rb) TOML gem for examples of different available field formats
 
 # Reports Generated
-<img src="=https://www.dropbox.com/s/xrhl67ru1z2dh08/crawler-report-trimmed.gif?raw=1" width="600">
+
+<img src="https://www.dropbox.com/s/xrhl67ru1z2dh08/crawler-report-trimmed.gif?raw=1" width="800">
 
 # Contributing
 * Bug reports and pull requests are welcome on GitHub at https://github.com/isonic1/Appium-Native-Crawler/issues. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
