@@ -4,23 +4,25 @@
     platformName      = "ANDROID"
     platform          = "android"
     deviceName        = "android"
-    app               = "app-debug.apk"
-    zippedApp         = "app-debug.apk.zip"
+    app               = "./app-debug.apk"
+    zippedApp         = "./app-debug.apk.zip"
     url               = "http://localhost:4723/wd/hub"
     appPackage        = "com.amazonaws.devicefarm.android.referenceapp"
     newCommandTimeout = "9999"
     locale            = "en_US"
 
-#(choices: saucelabs or browserstack. Add your user, key, and capabilities file location here...)
+#(choices: only saucelabs for now. Add your user, key, and capabilities file location here...)
 [cloud]
-    service   = ""
+    service   = "saucelabs" #(choices: "saucelabs")
     user      = ""
     key       = ""
-    caps_path = "sauce-caps.txt"
+    caps_path = "./sauce-caps.txt"
 
-#settings(ToDo: add screenshot and report settings. click_count is how many times a single element can be clicked, then ignored.
+#settings(ToDo: add screenshot and report booleans. click_count is how many times a single element can be clicked, then skipped. Keep this at a relatively low number to reduce multiple clicks of the same element.
+#Go here https://cloud.google.com/translate/docs/quickstart to setup a developer account and obtain a google translate access token/key.
 [settings]
-    click_count    = 3
+    click_count = 3
+    google_translate_key = ""
 
 #set the landing/home view activity
 [homeActivity]
@@ -52,12 +54,12 @@
     #    [ 'click', 'id',    'locator_value' ]
     #]
 
-#Tells the crawler to never click this locator
+#Tells the crawler to never click this locator. e.g. logout button, delete users button etc...
 [[doNotClick]]
     [doNotClick.crash_button]
         id = 'com.amazonaws.devicefarm.android.referenceapp:id/crash_button'
 
-#Set the API Key, loctor strategy (id, xpath, class, etc...), locator value and text that appears on the view.
+#Set the Applitools API Key, loctor strategy (id, xpath, class, etc...), locator value and text that appears on the view.
 [[applitools]]
     key = ""
     [applitools.do_not_upload]

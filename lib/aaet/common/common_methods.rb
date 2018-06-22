@@ -14,12 +14,15 @@ module Aaet
     def initialize settings
       generate_instance_variables nil, settings
 
-      if options_applitools
-        self.applitools = Aaet::ApplitoolEyes.new settings
-        self.tests = applitools.tests
-        print_debug "\nApplitools Tests:".green
-        ap tests if options_debug
-        print_debug "\n"
+      #Applitools only runs on crawler mode...
+      if options[:mode] == "crawler"
+        if options_applitools
+          self.applitools = Aaet::ApplitoolEyes.new settings
+          self.tests = applitools.tests
+          print_debug "\nApplitools Tests:".green
+          ap tests if options_debug
+          print_debug "\n"
+        end
       end
 
       self.count = "%03d" % 1
@@ -157,7 +160,7 @@ module Aaet
                 results = applitools.close_eyes
                 applitools_results results, test_name
                 uploaded_to_applitools test_name
-                #TODO: create a method to shutdown after test count matches redis test count...
+                #TODO: create a method to shutdown after test count matches redis completed test count...
                 #redis.hincr("applicount", "count")
               end
             end
@@ -217,6 +220,7 @@ module Aaet
     end
 
     def string
+      #TODO create a CLI option to change which kind of strings are passed
       chars = Lorem.characters(rand(1..100))
       sentence = Faker::Hipster.sentence(1)
       words = (Faker::Hipster.words(rand(1..10))).shuffle.join(" ")

@@ -6,6 +6,7 @@ require 'httparty'
 require 'jsonpath'
 require 'fileutils'
 require 'pry'
+require 'colorize'
 
 class ReportBuilder
 
@@ -182,18 +183,19 @@ class ReportBuilder
 
   def get_locale string
     res = google_api string
-    lang = jpath(res["data"], "language").join
-    conf = jpath(res["data"], "confidence").join
-    { locale: lang, confidence: conf }
+    if res.code == 200
+      lang = jpath(res["data"], "language").join
+      conf = jpath(res["data"], "confidence").join
+      { locale: lang, confidence: conf }
+    else
+      puts "\nGetting Invalid Status Code '#{res.code}' from Google API".red
+      puts "Response Message: #{res.message}\n".red
+      { locale: 'api-error', confidence: 'api-error' }
+    end
   end
 
-  def google_api string, key = ENV["GOOGLE_API_KEY"]
-    if ENV["GOOGLE_API_KEY"].nil?
-      puts "\nNeed GOOGLE_API_KEY Environment Variable API Key...\n".red
-      return
-    else
-      HTTParty.get("https://www.googleapis.com/language/translate/v2/detect", query: { q: string, key: key })
-    end
+  def google_api(string, key = ENV["GOOGLE_API_KEY"] || options[:config][:settings][:google_translate_key])
+    HTTParty.get("https://www.googleapis.com/language/translate/v2/detect", query: { q: string, key: key })
   end
 
   def jpath(hash, key)
@@ -281,7 +283,7 @@ class ReportBuilder
     }
     CSS
 
-    screenshots = Dir["#{options[:output_dir]}/*.png"]
+    screenshots = Dir["#{options[:output_dir]}/*.png"].sort
 
     File.open("#{report_dir}/screenshots-#{filename}.html", 'w') do |f|
 
@@ -447,19 +449,31 @@ class ReportBuilder
     report      = { crashed: crashed, app_info: app_info, device_info: device_info, max_values: max_values, data: data }
 
     if crashed
-      filename = "#{options[:run_time]}-#{uuid}-#{process}-#{package_name}.crashed"
+      filename = "#{options[:run_time]}-#{uuid}-#{process}-#{language}-#{package_name}.crashed"
     else
-      filename = "#{options[:run_time]}-#{uuid}-#{process}-#{package_name}"
+      filename = "#{options[:run_time]}-#{uuid}-#{process}-#{language}-#{package_name}"
     end
 
+    create_dir "reports"
     report_dir = "#{Dir.pwd}/reports/#{filename}"
     create_dir report_dir
 
     if options[:options][:translate]
-      bad = collect_bad_strings(language)
-      screenshot_array = screenshots(dir)
-      grouped = bad.map { |x| { screenshot: find_screenshot_path(screenshot_array, x[0]), strings: x[1] } }
-      generate_translations_report(filename, "Translations", grouped)
+      if ENV["GOOGLE_API_KEY"].nil? and (options[:config][:settings][:google_translate_key].nil? or options[:config][:settings][:google_translate_key].empty?)
+        puts "\nSkipping Google Translate Report!!!".red
+        puts "Need a GOOGLE_API_KEY Environment Variable API Key set OR place key in config file under settings...\n".red
+        puts "Get a key at: https://cloud.google.com/translate/docs/quickstart\n".yellow
+      else
+        bad = collect_bad_strings(language)
+        screenshot_array = screenshots(dir)
+        grouped = bad.map { |x| { screenshot: find_screenshot_path(screenshot_array, x[0]), strings: x[1] } }
+
+        if grouped.empty?
+          puts "\nNo Translation Descrepancies Found! Skipping Translation Report Generation...\n".green
+        else
+          generate_translations_report(filename, "Translations", grouped)
+        end
+      end
     end
 
     #generate perforance report.
@@ -490,6 +504,8 @@ class ReportBuilder
     report_dir = "#{Dir.pwd}/runs"
     create_dir report_dir
     open("#{report_dir}/#{filename}.json", 'w') { |f| f << report.merge!({options: options, activities: activities}) }
+
+    puts "\nVIEW REPORTS: file:///#{Dir.pwd}/reports/#{filename}/#{filename}.html\n Open in FIREFOX!... Chrome, Safari wont display the performance report...\n".yellow
   end
 end
 

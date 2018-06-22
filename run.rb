@@ -69,9 +69,10 @@ class Executer < ReportBuilder
   def kill_everything
     if caps_platform == "android" and !options_cloud
       Process.kill("HUP", program_opts[:logcat_pid])
-      #setup.kill_process "#{@uuid} logcat -v threadtime"
+      #binding.pry
+      setup.kill_processes "'#{@uuid} logcat'"
       %x(adb -s #{@uuid} shell settings put global policy_control null*) #put status bar back...
-      #system("adb -s #{device[:uuid]} emu kill") if options_emulator and options_kill_emulator
+      system("adb -s #{@uuid} emu kill") if options_emulator and !options_keepEmulatorAlive
       sleep 1
     end
     driver.quit rescue nil
@@ -108,12 +109,14 @@ class Executer < ReportBuilder
   end
 
   def initialize_driver
-    if options_cloud
+    if options_cloud #only do once for crawler, reply will have these settings already.
       local_app_path = caps[:caps][:app]
       caps[:caps][:app] = caps_cloud_app
-      cloud_url = caps[:appium_lib][:server_url].insert(7, "#{cloud_user}:#{cloud_key}")
-      caps[:caps][:url] = cloud_url
-      caps[:appium_lib][:server_url] = cloud_url
+      if ["crawler", "monkey"].include? options[:mode]
+        cloud_url = caps[:appium_lib][:server_url].insert(7, "#{cloud_user}:#{cloud_key}")
+        caps[:caps][:url] = cloud_url
+        caps[:appium_lib][:server_url] = cloud_url
+      end
     else
       old_url = URI(caps[:caps][:url])
       old_port = old_url.port.to_s
@@ -132,7 +135,6 @@ class Executer < ReportBuilder
     @resolution = driver.capabilities["deviceScreenSize"]
     program_opts[:app_and_device_data][:device][:resolution] = @resolution
     program_opts[:app_and_device_data][:activities] = program_opts[:activities] #will need to figure out how to parse iOS activities
-    program_opts.delete(:activities)
   end
 
   def generate_output_dir
@@ -188,21 +190,23 @@ class Executer < ReportBuilder
   end
 end
 
-#     puts ""
-#     puts "Reset Appium Session: #{reset}"
-#     puts "Running locale: #{locale}"
-#     puts "Running orientation: :#{orientation}"
-#     puts "Translate strings: #{translate}"
-#     puts "Replay will stop after #{time} seconds...\n"
-
 def crawler options
   setup = CommonSetup.new
   setup.prep_environment
   settings = setup.format_options options
   settings[:run_time] = Time.now.strftime("%Y.%m.%d.%H.%M")
-  output_dir_base = "output/#{settings[:run_time]}"
-  Dir.mkdir output_dir_base unless File.exists? output_dir_base
+  output_dir_base = setup.create_output_directory "output", settings[:run_time]
   settings[:output_dir_base] = output_dir_base
+
+  if options[:applitools] and settings[:config][:applitools][0][:key].empty?
+    if ENV['APPLITOOLS_API_KEY'].nil?
+      puts "\nYou must provide and Applitools Key in the config file or add APPLITOOLS_API_KEY environment variable\n".red
+      abort
+    else
+      settings[:config][:applitools][0][:key] = ENV['APPLITOOLS_API_KEY']
+    end
+  end
+
   #TODO: https://github.com/celluloid/celluloid #maybe look into replacing parallel gem with this...
   Parallel.each(settings[:caps], in_processes: settings[:caps].count, interrupt_signal: 'TERM') do |caps|
     settings[:process] = Parallel.worker_number #set the current process running...
@@ -230,10 +234,9 @@ def monkey options
   setup.prep_environment
   settings = setup.format_options options
   settings[:run_time] = Time.now.strftime("%Y.%m.%d.%H.%M")
-  Dir.mkdir "output" unless File.exists? "output"
-  output_dir_base = "output/#{settings[:run_time]}"
-  Dir.mkdir output_dir_base unless File.exists? output_dir_base
+  output_dir_base = setup.create_output_directory "output", settings[:run_time]
   settings[:output_dir_base] = output_dir_base
+
   Parallel.each(settings[:caps], in_processes: settings[:caps].count, interrupt_signal: 'TERM') do |caps|
     settings[:process] = Parallel.worker_number #set the current process running...
     settings[:config][:caps] = caps
@@ -262,7 +265,16 @@ def replay options
   file = setup.select_run(package_name)
   last_run = setup.symbolize(eval(open(file).read))
 
-  #override last crawl run options with replay options.
+  if options[:applitools] and last_run[:options][:config][:applitools][0][:key].empty?
+    if ENV['APPLITOOLS_API_KEY'].nil?
+      puts "\nYou must provide and Applitools Key in the config file or add APPLITOOLS_API_KEY environment variable\n".red
+      abort
+    else
+      settings[:config][:applitools][0][:key] = ENV['APPLITOOLS_API_KEY']
+    end
+  end
+
+  #override last crawl run options with current replay options.
   options.each { |k,v| last_run[:options][:options][k] = v }
 
   setup.load_activities last_run[:activities]
@@ -273,18 +285,10 @@ def replay options
       config: last_run[:options][:config]
   }
   settings[:run_time] = Time.now.strftime("%Y.%m.%d.%H.%M")
-  output_dir_base = "output/#{settings[:run_time]}"
-  Dir.mkdir output_dir_base unless File.exists? output_dir_base
+  output_dir_base = setup.create_output_directory "output", settings[:run_time]
   settings[:output_dir_base] = output_dir_base
   settings[:last_run_steps] = last_run[:data]
   settings[:process] = 0
 
   Executer.new(settings).runner(settings[:options][:seconds])
 end
-
-
-#   puts "Reset Appium Session: #{reset}"
-#   puts "Running locale: #{locale}"
-#   puts "Running orientation: :#{orientation}"
-#   puts "Translate strings: #{translate}"
-#   puts "Replay will stop after #{time} seconds...\n"

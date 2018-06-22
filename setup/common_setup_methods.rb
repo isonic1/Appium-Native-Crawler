@@ -60,6 +60,13 @@ class CommonSetup
     `rm -rf #{dir}/*`
   end
 
+  def create_output_directory name, time
+    Dir.mkdir name unless File.exists? name
+    output_dir_base = "#{name}/#{time}"
+    Dir.mkdir output_dir_base unless File.exists? output_dir_base
+    return output_dir_base
+  end
+
   def create_directories dir_data
     start_dir = Dir.pwd
     Dir.mkdir "output" unless File.exists? "output"
@@ -176,16 +183,14 @@ class CommonSetup
   end
 
   def upload_app_to_cloud config
+    if !config[:cloud][:service] == "saucelabs"
+      puts "\nCurrently only Sauce Labs ('saucelabs') is supported\n".red
+      abort
+    end
     app = config[:caps][:zippedApp]
     filename = File.basename(app)
-    if config[:cloud][:service] == "saucelabs"
-      puts "Uploading App to Sauce Labs: #{app}"
-      url = "https://saucelabs.com/rest/v1/storage/#{config[:cloud][:user]}/#{filename}?overwrite=true"
-    elsif config[:cloudSettings][:service] == "browserstack"
-      puts "Uploading App to BrowserStack: #{app}"
-      #curl -u "USERNAME:ACCESS_KEY" -X POST https://api.browserstack.com/app-automate/upload -F "file=@/path/to/app/file/Application-debug.apk"
-      url = "https://api.browserstack.com/app-automate/upload"
-    end
+    puts "Uploading App to Sauce Labs: #{app}"
+    url = "https://saucelabs.com/rest/v1/storage/#{config[:cloud][:user]}/#{filename}?overwrite=true"
     c = Curl::Easy.new(url)
     c.http_auth_types = :basic
     c.username = config[:cloud][:user]

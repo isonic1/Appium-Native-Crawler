@@ -4,7 +4,6 @@ require 'awesome_print'
 require 'colorize'
 require 'faker'
 require 'redic'
-require 'graphite-api'
 require 'nokogiri'
 require 'pp'
 

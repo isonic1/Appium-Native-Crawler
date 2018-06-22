@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require_relative File.read("#{File.dirname(__FILE__)}/../run.rb")
+require_relative '../run.rb'
 require 'commander/import'
 require 'colorize'
 
@@ -10,42 +10,45 @@ command :crawler do |c|
   c.syntax = 'aaet  [options]'
   c.summary = 'Run Aaet Crawler'
   c.description = c.summary
-  c.example 'description', ""
+  c.example 'description', "aaet crawler --seconds 300 --emulator avdName(s) --config path/to/configFile.txt"
   c.option '-s', '--seconds SECONDS', Integer, 'Set Runtime in Seconds: e.g. -s 300 (for 5 minutes)'
-  c.option '-c', '--config CONFIG', String, 'Set config file location: e.g. -c config.txt'
-  c.option '-e', '--emulator EMULATOR', Array, 'Set emulator or emulators to start: e.g. -e "Nexus" or Array as -e "NexusOne emulator1 emulator2"'
+  c.option '-c', '--config CONFIG', String, 'Set config file location: e.g. -c myAppConfig.txt'
+  c.option '-e', '--emulator EMULATOR', Array, 'Set emulator(s) AVD Name(s) to start: e.g. -e Nexus or Array as -e "NexusOne emulator1 emulator2"'
   c.option '-o', '--orientation ORIENTATION', String, 'Set devices orientation: e.g. -o landscape'
-  c.option '--bothOrientations', "If running in parallel with multiple devices. Tell Crawler to run both Orientations, if available. e.g --bothOrientations true"
-  c.option '-l', '--language LANGUAGE', Array, 'Set languages(s): e.g. -l "en" or "en de ar" Default: en'
+  c.option '-l', '--language LANGUAGE', Array, 'Set languages(s): e.g. -l "en" or -l "en de ar" Default: en'
   c.option '-u', '--uuid UUID', Array, 'Set Real Device UUID. e.g. --uuid IBZ5AQMBCY7DHASK or Array as -u "UUID1 UUID2"'
-  c.option '-t', '--translate', 'Translate strings after job finish: e.g. -t true'
-  c.option '-a', '--applitools', 'Run Applitools Tests. e.g -a true'
-  c.option '-b', '--baseline', 'Set new Applitools baseline images. e.g. -b true'
-  c.option '-d', '--debug', 'Print debug statements: e.g. -d true'
-  c.option '--resetAppium', 'Reset Appium Session. e.g. -r false'
-  c.option '-x', '--cloud', 'Crawl in cloud. e.g. --cloud true. Make sure your cloud settings are set in [cloud] and caps is pointed to a config/toml file'
+  #Boolean options. Only pass the argument (e.g. --debug) to set to true. Otherwise they are all false by default.
+  c.option '--keepEmulatorAlive', "Keep emulator running after crawl. e.g. --keepEmulatorAlive. Default: false"
+  c.option '--bothOrientations', "If running in parallel with multiple devices. Tell Crawler to run both Orientations, if available. e.g --bothOrientations"
+  c.option '--translate', 'Translate strings after job finish: e.g. --translate. Default: false'
+  c.option '--applitools', 'Run Applitools Tests. e.g --applitools. Default: false'
+  c.option '--updateBaseline', 'Update Applitools baseline images. e.g. --updateBaseline. Default: false'
+  c.option '--debug', 'Print debug output: e.g. --debug. Default: false'
+  c.option '--resetAppium', 'Reset Appium Session - Reinstall app on startup. e.g. --resetAppium, Default: false'
+  c.option '--cloud', 'Crawl in cloud. e.g. --cloud. Default: false. Make sure your cloud settings are set in [cloud] and caps is pointed to a config/toml file'
   c.action do |args, options|
     options.default \
     mode: "crawler",
-    language: ["en"],
+    emulator: nil,
     orientation: "PORTRAIT",
+    language: ["en"],
+    uuid: nil,
+    keepEmulatorAlive: false,
     bothOrientations: false,
     translate: false,
-    debug: false,
     applitools: false,
-    baseline: false,
+    updateBaseline: false,
+    debug: false,
     resetAppium: false,
-    cloud: false,
-    emulator: nil,
-    uuid: nil
-    
+    cloud: false
+
     if options.config.nil?
       puts "\nYou must supply a config TOML file... e.g. -c configs/app-debug.txt\n".red
       abort
     end
 
     if options.emulator.nil? and options.uuid.nil?
-      puts "\nYou must supply a emulator/simulator or UUID... e.g. -e Nexus10 or -u UUID\n".red
+      puts "\nYou must supply a avdName/simulator or UUID... e.g. -e Nexus10 or -u UUID\n".red
       abort
     end
 
@@ -55,6 +58,7 @@ command :crawler do |c|
     end
 
     options.orientation = options.orientation.upcase
+
     crawler(options.default)
   end
 end
@@ -63,22 +67,22 @@ command :monkey do |c|
   c.syntax = 'aaet  [options]'
   c.summary = 'Run Aaet Monkey'
   c.description = c.summary
-  c.example 'description', ""
+  c.example 'description', "aaet monkey -c configs/wordpress.txt -s 300 -e EM1 --trace"
   c.option '-s', '--seconds SECONDS', Integer, 'Set Runtime in Seconds: e.g. -s 300 (for 5 minutes)'
-  c.option '-c', '--config CONFIG', String, 'Set config file location: e.g. -c app-debug.txt'
-  c.option '-e', '--emulator EMULATOR', Array, 'Set emulator or emulators to start: e.g. -e "Nexus" or Array as -e "NexusOne emulator1 emulator2"'
+  c.option '-c', '--config CONFIG', String, 'Set config file location: e.g. -c myAppConfig.txt'
+  c.option '-e', '--emulator EMULATOR', Array, 'Set emulator(s) AVD Name(s) to start: e.g. -e Nexus or Array as -e "NexusOne emulator1 emulator2"'
   c.option '-u', '--uuid UUID', Array, 'Set Device UUID. e.g. --uuid IBZ5AQMBCY7DHASK or Array as -u "IBZ5AQMBCY7DHASK skso9eosdlldfjs'
   c.option '-o', '--orientation ORIENTATION', String, 'Set devices orientation: e.g. -o landscape'
-  c.option '--bothOrientations', "If running in parallel with multiple devices. Tell Crawler to run both Orientations, if available. e.g --bothOrientations true"
-  c.option '-l', '--language LANGUAGE', String, 'Set languages: e.g. -l "en"'
-  c.option '-d', '--debug', 'Print debug statements: e.g. -d true'
-  c.option '--resetAppium', 'Reset Appium Session. e.g. -r false'
-  c.option '-x', '--cloud', 'Crawl in cloud. e.g. --cloud true. Make sure your cloud settings are set in [cloud] and caps is pointed to a config/toml file'
+  #Boolean options. Only pass the argument (e.g. --debug) to set to true. Otherwise they are all false by default.
+  c.option '--keepEmulatorAlive', "Keep emulator running after crawl. e.g. --keepEmulatorAlive. Default: false"
+  c.option '--bothOrientations', "If running in parallel with multiple devices. Tell Crawler to run both Orientations, if available. e.g --bothOrientations"
+  c.option '--debug', 'Print debug output: e.g. --debug. Default: false'
+  c.option '--resetAppium', 'Reset Appium Session - Reinstall app on startup. e.g. --resetAppium, Default: false'
+  c.option '--cloud', 'Crawl in cloud. e.g. --cloud. Default: false. Make sure your cloud settings are set in [cloud] and caps is pointed to a config/toml file'
   c.action do |args, options|
     options.default \
     mode: "monkey",
     applitools: false,
-    translate: false,
     seconds: 300,
     debug: false,
     language: "en",
@@ -87,10 +91,16 @@ command :monkey do |c|
     resetAppium: false,
     cloud: false,
     emulator: nil,
-    uuid: nil
+    uuid: nil,
+    keepEmulatorAlive: false
 
     if options.config.nil?
       puts "\nYou must supply a config TOML file... e.g. -c configs/app-debug.txt\n".red
+      abort
+    end
+
+    if options.emulator.nil? and options.uuid.nil?
+      puts "\nYou must supply a avdName/simulator or UUID... e.g. -e Nexus10 or -u UUID\n".red
       abort
     end
 
@@ -100,6 +110,7 @@ command :monkey do |c|
     end
 
     options.orientation = options.orientation.upcase
+
     monkey(options.default)
   end
 end
@@ -108,20 +119,24 @@ command :replay do |c|
   c.syntax = 'aaet [options]'
   c.summary = 'Replay Last Aaet Run'
   c.description = c.summary
-  c.example 'description', ""
-  c.option '-s', '--seconds SECONDS', Integer, 'Set Runtime in Seconds: e.g. -s 300 (for 5 minutes)'
-  c.option '-c', '--config CONFIG', String, 'Set config file location: e.g. -c config.txt'
-  c.option '-t', '--translate', 'Translate strings after job finish: e.g. -t true'
-  c.option '-a', '--applitools', 'Run Applitools Tests. e.g -a true'
-  c.option '-b', '--baseline', 'Set new Applitools baseline images. e.g. -b true'
-  c.option '-d', '--debug', 'Print debug statements: e.g. -d true'
+  c.example 'description', "aaet replay -c configs/wordpress.txt -s 300 --trace"
+  c.option '-s', '--seconds SECONDS', Integer, 'Set Max Runtime in Seconds: e.g. -s 300 (for 5 minutes). Crawler will run until the replay steps are finished or this value'
+  c.option '-c', '--config CONFIG', String, 'Set config file location: e.g. -c myAppConfig.txt'
+  #Boolean options. Only pass the argument (e.g. --debug) to set to true. Otherwise they are all false by default.
+  c.option '--keepEmulatorAlive', "Keep emulator running after crawl. e.g. --keepEmulatorAlive. Default: false"
+  c.option '--debug', 'Print debug output: e.g. --debug. Default: false'
+
   c.action do |args, options|
     options.default \
     mode: "replay",
-    translate: false,
-    debug: false,
     applitools: false,
-    baseline: false
+    debug: false,
+    keepEmulatorAlive: false
+
+    if options.config.nil?
+      puts "\nYou must supply a config TOML file... e.g. -c configs/app-debug.txt\n".red
+      abort
+    end
 
     replay(options.default)
   end

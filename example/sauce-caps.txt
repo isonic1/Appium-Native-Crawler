@@ -2,28 +2,23 @@
 [common_caps]
     maxDuration       = 10800
 
-#Set just the cloud server URL with @. Do not include your user or password.
+#Set just the cloud server URL with @. Do not include your user or key. Also, only use http for now, not https.
 [appium_lib]
     server_url        = "http://@ondemand.saucelabs.com:80/wd/hub"
 
 #Must define device caps with DeviceOne, DeviceTwo etc...
 #Set the name value to anything you want or keep as the deviceName.
 [DeviceOne]
-    deviceName        = "Android Emulator"
-    name              = "Android Emulator"
-    platformVersion   = "6.0"
-
-[DeviceTwo]
     deviceName        = "Samsung Galaxy S3 Emulator"
     name              = "Samsung Galaxy S3 Emulator"
     platformVersion   = "4.4"
 
-[DeviceThree]
+[DeviceTwo]
     deviceName        = "LG Nexus 4 Emulator"
     name              = "LG Nexus 4 Emulator"
     platformVersion   = "4.4"
 
-[DeviceFour]
+[DeviceThree]
     deviceName        = "Android GoogleAPI Emulator"
     name              = "Android GoogleAPI Emulator"
     platformVersion   = "7.1"

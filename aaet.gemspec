@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["isonic1"]
   spec.email         = ["justin.ison@gmail.com"]
 
-  spec.summary       = %q{A CLI to crawl native mobile applications with Appium on Devices & Emulators & Cloud Serivces}
+  spec.summary       = %q{A CLI to crawl native mobile Android applications with Appium on Devices, Emulators & Cloud Serivces}
   spec.description   = %q{A CLI to collect metadata about an applicaton on every run from the command line}
   spec.homepage      = "https://github.com/isonic1/Appium-Native-Crawler"
   spec.license       = "GPL-3.0"
@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features|output|pkg)/})
+    f.match(%r{^(test|spec|features|output|pkg|example|output|runs|reports)/})
   end
   #spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "bin"
@@ -49,4 +49,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "httparty"
   spec.add_dependency "toml-rb"
   spec.add_dependency "appium_lib"
+  spec.add_dependency "jsonpath"
 end

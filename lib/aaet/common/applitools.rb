@@ -10,7 +10,7 @@ module Aaet
       self.eyes = Applitools::Selenium::Eyes.new
       self.applitools_settings = settings[:config][:applitools][0]
       eyes.api_key = applitools_settings[:key]
-      eyes.save_failed_tests = settings[:options][:baseline]
+      eyes.save_failed_tests = settings[:options][:updateBaseline]
       batch_info = Applitools::BatchInfo.new(caps[:appPackage]) #app name, locale, orientation
       batch_info.id = Digest::MD5.hexdigest(settings[:run_time]).scan(/\d/).join('')
       eyes.batch = batch_info
