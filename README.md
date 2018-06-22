@@ -12,7 +12,7 @@
     * Monkey Tester Mode
     * Replaying an exploratory test crawl
 
-<img src="https://www.dropbox.com/s/z3csvn5n0vrcx4r/crawler-trimmed.gif?raw=1" width="800">
+<img src="https://www.dropbox.com/s/r3cc2hmzjsenm2p/crawler-trimmed.gif?raw=1" width="800">
 
 # Why?
 I built this because it was something I needed and thought should exist. We need more tools like this to help keep up with the rapid pace of development in the current marketplace. I also got tired or writing and refactoring tests for a constantly changing application. So I decided to try to automate to automation by building automated exploratory testing.
