@@ -1,4 +1,4 @@
-# Appium Automated Exploratory Tester - Automated Automation
+# Appium Automated Exploratory Tester
 
 <img src="https://www.dropbox.com/s/zoab5i5tzsao97w/hexa-spider-robot2.gif?raw=1" width="800">
 
@@ -14,20 +14,20 @@
     * Monkey Tester Mode
     * Replaying an exploratory test crawl
     
-# Why?
+### Why?
 I built this because it was something I needed and thought should exist. We need more tools like this to help keep up with the rapid pace of development in the current marketplace. I also got tired or writing and refactoring tests for a constantly changing application. So I decided to try to automate to automation by building automated exploratory testing.
 
-# Will this work for every app?
+### Will this work for every app?
 Probably not but that is the challenge of building somethign that does. Will it work for most apps? I think so. If it doesn't work for your app, help make it work by contributing a pull request. :)
 
-# Will this work on Windows?
+### Will this work on Windows?
 I have only tested this on OSX and Linux environments but it will need some refactoring for Windows. Please help make it work by adding a pull request. :)
 
-# How can you help?
+### How can you help?
 * Look at the ToDo's! 
     * FWIW - You don't need to have Ruby knowledge to help with some of these.
 
-# Requirements before using
+### Requirements before using
 * Ruby 2.2 or greater (I have not tested this with Ruby 2.5 but I assume it will work)
     * I highly recommend installing RVM or RBENV.
     * Install Ruby devkit or GCC C++ Dependencies (e.g. on osx: xcode-select --install). Basically, just make sure you can install the json gem. e.g. ```gem install json```
@@ -38,11 +38,11 @@ I have only tested this on OSX and Linux environments but it will need some refa
 * Redis server installed and started. e.g. ```brew install redis```
     * Make sure you set the Redis server to always start on bootup. e.g. ```brew services start redis```
     
-# Gem Installation
+### Gem Installation
 * via rubygems.org ```gem install aaet```
     * or locally from the cloned repo via ```gem install Appium-Native-Crawler/pkg/aaet-*.gem```
 
-# Before you start
+### Before you start
 * Install all the requirements specified
 * Run the example project in the examples folder
     * cd Appium-Native-Crawler/examples
@@ -57,10 +57,10 @@ I have only tested this on OSX and Linux environments but it will need some refa
 * If you want to try with the Wordpress App. Go [here](https://github.com/wordpress-mobile/WordPress-Android#oauth2-authentication) and follow the instructions to create a developer account to get a unique app_id and app_secret to compile the app locally.
     * You can then use the example wordpress.txt config file to crawl the app.
 
-# How does it work?
+### How does it work?
 * The crawler will run based on the CLI arguments and config file settings. The crawler detects all clickable and enabled elements on every view and iterates through them until something changes in the UI. Once it detects a change it then captures a screenshot, perforamnce data, and amongst other metadata. Based on your max runtime setting (-s or --seconds) it will run until this times out or a crash occurs. After a timeout or crash occurs a report is automatically generated in the reports folder.
 
-# Example Usage
+### Example Usage
 * Crawl portrait "default": (-s (max runtime in seconds), -e (avd name or "em1 em2 em3"), -c (path to config file), --debug (print debug output))
     * ```aaet crawler -s 300 -e EM1 -c path/to/configFile.txt --debug --trace``` 
     * See all options: ```aaet crawler --help```
@@ -119,7 +119,7 @@ I have only tested this on OSX and Linux environments but it will need some refa
 * Debugging: Passing --debug will print out a lot of debugging output. One such debugging output are the instance variables set which are derived dynamically based on the config and command line arguments/options and then passed into each class. See [here](https://github.com/isonic1/Appium-Native-Crawler/blob/master/run.rb#L46-L63) for example.
 * Definitely look at the --help menu for each option (crawler, replay, monkey). This will tell you all the available arguments you can use. Also, look at the code for further reference!
 
-# Using your app!
+### Using your app!
 * Can your application be automated by Appium? Make sure you can actually run automation on your app with Appium before proceeding. Some apps have security settings to block automation or screenshot captures.
     * Go [here](https://github.com/appium/sample-code/tree/master/sample-code/examples) and run one of the android example apps. 
     * Then configure your android app to run on Appium using one of these examples to see if it works.
@@ -133,15 +133,15 @@ I have only tested this on OSX and Linux environments but it will need some refa
 * Use uiautomatorviewer, Appium Inspector, the Appium Desktop App or whichever hierarchy viewer tool you want to get the locator values you need from your app and place into the config file for the backLocators, multiClickLocators, loginPage, doNotClick, applitools fields.
 * See [toml-rb](https://github.com/emancu/toml-rb) TOML gem for examples of different available field formats
 
-# Reports Generated
+### Reports Generated
 
 <img src="https://www.dropbox.com/s/xrhl67ru1z2dh08/crawler-report-trimmed.gif?raw=1" width="800">
 
-# Contributing
+### Contributing
 * Bug reports and pull requests are welcome on GitHub at https://github.com/isonic1/Appium-Native-Crawler/issues. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 * Pull Request are highly welcomed and encouraged! See TODO's for list of things to be done.
 
-# TODO's
+### TODO's
 * Implement iOS crawling
 * Use YAML instead of TOML config files
 * Implement Docker execution (Android Only).
@@ -162,5 +162,5 @@ I have only tested this on OSX and Linux environments but it will need some refa
 * Modify to run on Windows
     * This actually wouldn't take too much effort other than time.
 
-# Copywrite
+### Copywrite
 (GPL-3.0)[Appium-Native-Crawler/LICENSE]
