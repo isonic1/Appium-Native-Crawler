@@ -158,12 +158,12 @@ I have only tested this on OSX and Linux environments but it will need some refa
 * Add wiki documentation
     * Add more examples and documentation
 * Refactor concurrent execution. Look for alternative to the Parallel gem.
-* Refactor/Improve HTML Reports
+* Refactor/Improve the ugly HTML Reports
     * generate_reports.rb needs to be cleaned up.
 * Implement UiAutomator2
     * Some of the locator parsing logic will need to be updated and how the crawler obtains certain variables about the environment.
 * Modify to run on Windows
     * This actually wouldn't take too much effort other than time refactoring the directory creation using ruby libraries and obtaining process id's.
 
-### Copywrite
-(GPL-3.0)[Appium-Native-Crawler/LICENSE]
+### License
+(Apache 2.0)[https://github.com/isonic1/Appium-Native-Crawler/blob/master/LICENSE]

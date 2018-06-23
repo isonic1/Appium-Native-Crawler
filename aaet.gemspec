@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{A CLI to crawl native mobile Android applications with Appium on Devices, Emulators & Cloud Serivces}
   spec.description   = %q{A CLI to collect metadata about an applicaton on every run from the command line}
   spec.homepage      = "https://github.com/isonic1/Appium-Native-Crawler"
-  spec.license       = "GPL-3.0"
+  spec.license       = "Apache-2.0"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
