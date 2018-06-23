@@ -67,7 +67,7 @@ command :monkey do |c|
   c.syntax = 'aaet  [options]'
   c.summary = 'Run Aaet Monkey'
   c.description = c.summary
-  c.example 'description', "aaet monkey -c configs/wordpress.txt -s 300 -e EM1 --trace"
+  c.example 'description', "aaet monkey -c app-debug.txt -s 300 -e EM1 --trace"
   c.option '-s', '--seconds SECONDS', Integer, 'Set Runtime in Seconds: e.g. -s 300 (for 5 minutes)'
   c.option '-c', '--config CONFIG', String, 'Set config file location: e.g. -c myAppConfig.txt'
   c.option '-e', '--emulator EMULATOR', Array, 'Set emulator(s) AVD Name(s) to start: e.g. -e Nexus or Array as -e "NexusOne emulator1 emulator2"'
@@ -119,7 +119,7 @@ command :replay do |c|
   c.syntax = 'aaet [options]'
   c.summary = 'Replay Last Aaet Run'
   c.description = c.summary
-  c.example 'description', "aaet replay -c configs/wordpress.txt -s 300 --trace"
+  c.example 'description', "aaet replay -c app-debug.txt -s 300 --trace"
   c.option '-s', '--seconds SECONDS', Integer, 'Set Max Runtime in Seconds: e.g. -s 300 (for 5 minutes). Crawler will run until the replay steps are finished or this value'
   c.option '-c', '--config CONFIG', String, 'Set config file location: e.g. -c myAppConfig.txt'
   #Boolean options. Only pass the argument (e.g. --debug) to set to true. Otherwise they are all false by default.
