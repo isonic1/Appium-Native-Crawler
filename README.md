@@ -87,8 +87,8 @@ I have only tested this on OSX and Linux environments but it will need some refa
     * Note: Not all apps are ideal for the monkey tester. Ideally, apps with lots of UI elements on each view work the best. If an app doesn't have many elements to interact with the monkey tester might appear to be doing nothing. This can be refactored of course and would love the help. Submit a PR!
     * Note: The Crawler automatically starts the emulator(s) if not already started.
 
-* Crawl & Translate: (-s (max runtime in seconds), -e (avd name), -c (path to config file), --debug (print debug output), --reset (Appium App Reset default: false), -l (languages array "en fr de"), --translate (Google Translate String))
-    * ```aaet crawler -s 120 -e EM1 -c wordpress.txt --debug --reset -l 'fr de' --translate --trace```
+* Crawl & Translate: (-s (max runtime in seconds), -e (avd name), -c (path to config file), --debug (print debug output), --resetAppium (Appium App Reset), -l (languages array "en fr de"), --translate (Google Translate String))
+    * ```aaet crawler -s 120 -e EM1 -c wordpress.txt --debug --resetAppium -l 'fr de' --translate --trace```
     * See all options: ```aaet crawler --help```
     * Note: The Crawler automatically starts the emulator(s) if not already started.
     * Note: Your app must support multiple languages for this to work.
@@ -96,13 +96,13 @@ I have only tested this on OSX and Linux environments but it will need some refa
     * Note: Do not put a comma between language code, just a space. e.g. "en de fr"
     * Note: Need Google API Key. Go [here](https://cloud.google.com/translate/docs/quickstart) to create dev account and get key. Set a GOOGLE_API_KEY environment variable or place key in config file.
     
-* Crawl & Applitools: (-s (max runtime in seconds), -e (avd name), -c (path to config file), --debug (print debug output), --reset (Appium App Reset default: false), --applitools (run applitools tests defined in config file))
-    * ```aaet crawler -s 120 -e EM1 -c wordpress.txt --debug --reset --applitools --trace```
+* Crawl & Applitools: (-s (max runtime in seconds), -e (avd name), -c (path to config file), --debug (print debug output), --applitools (run applitools tests defined in config file))
+    * ```aaet crawler -s 120 -e EM1 -c wordpress.txt --debug --applitools --trace```
     * See all options: ```aaet crawler --help```
     * Note: The Crawler automatically starts the emulator(s) if not already started.
     * Note: The Crawler will upload to applitools based on the tests you define in the config TOML file. Make sure you add your API Key in the config file or have a APPLITOOLS_API_KEY environment variable set.
 
-* Crawl in Parallel: (-s (max runtime in seconds), -e (avd name or array "en fr de"), -c (path to config file), --debug (print debug output))
+* Crawl in Parallel: (-s (max runtime in seconds), -e (avd name or array "Nexus4 myEmulator EM1"), -c (path to config file), --debug (print debug output))
     * ```aaet crawler -s 120 -e "Nexus1 MyEmulator" -c wordpress.txt --debug --trace```
     * ```aaet crawler -s 120 -u "UUID1 UUID2" -c wordpress.txt --debug --trace```
     * See all options: ```aaet crawler --help```
