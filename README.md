@@ -7,17 +7,17 @@
 * Features include: 
     * Collects Screenshots 
     * Performance Data Collection
-    * Run in Landscape and Portrait
-    * Accessibility Detection
+    * Runs in both Landscape and Portrait
+    * Elements & Accessibility Detection
     * Runs on Sauce Labs
     * Runs in parallel
     * Google Translates App Strings
     * Automated validations with [Applitools Eyes](https://www.applitools.com)
-    * Monkey Tester Mode
-    * Replaying a test crawl
+    * Monkey Tester
+    * Replaying a past test crawl
     
 ### Why?
-I built this to mimick exploratory testing the best I could make it. Also because it was something I needed at the time and thought should exist. I do believe with the speed of development these days we need more tools like this to help us keep pace and not sacrifice quality. I also got tired or writing and refactoring tests for a constantly changing application so I automated the automation. 
+I built this to mimic exploratory testing the best I could make it. Also because it was something I needed at the time and thought should exist. I do believe with the speed of development these days we need more tools like this to help us keep pace and not sacrifice quality. I also got tired or writing and refactoring tests for a constantly changing application so I automated the automation. 
 
 ### Will this work for every app?
 Probably not but that is the challenge of building somethign that does. Will it work for most apps? I think so. If it doesn't work for your app, help make it work by contributing a pull request. :)
@@ -164,6 +164,14 @@ I have only tested this on OSX and Linux environments but it will need some refa
     * Some of the locator parsing logic will need to be updated and how the crawler obtains certain variables about the environment.
 * Modify to run on Windows
     * This actually wouldn't take too much effort other than time refactoring the directory creation using ruby libraries and obtaining process id's.
+
+### Tests to add
+* Validate crawler and monkey tester in landscape and portrait locally and cloud
+* Validate parallel execution locally and cloud
+* Translate app strings
+* Validate with Applitools
+* Validate replay locally and in cloud
+* Report generation
 
 ### License
 (Apache 2.0)[https://github.com/isonic1/Appium-Native-Crawler/blob/master/LICENSE]
