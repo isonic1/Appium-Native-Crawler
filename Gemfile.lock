@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    aaet (0.1.0)
+    aaet (0.1.1)
       apktools (~> 0.7.1)
       appium_lib
       awesome_print
@@ -142,4 +142,4 @@ DEPENDENCIES
   rspec (~> 3.0)
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
