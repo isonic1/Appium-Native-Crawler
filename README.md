@@ -1,6 +1,6 @@
 # Appium Automated Exploratory Tester
 
-<img src="https://www.dropbox.com/s/zoab5i5tzsao97w/hexa-spider-robot2.gif?raw=1" width="800">
+<img src="https://www.dropbox.com/s/zoab5i5tzsao97w/hexa-spider-robot2.gif?raw=1" width="600" height="600">
 
 ### Appium Native Crawler CLI 
 
