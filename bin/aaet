@@ -3,7 +3,7 @@ require_relative '../run.rb'
 require 'commander/import'
 require 'colorize'
 
-program :version, '0.1.0'
+program :version, '0.1.1'
 program :description, 'Appium Automated Exploratory Tester'
 
 command :crawler do |c|
