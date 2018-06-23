@@ -140,7 +140,7 @@ I have only tested this on OSX and Linux environments but it will need some refa
 <img src="https://www.dropbox.com/s/xrhl67ru1z2dh08/crawler-report-trimmed.gif?raw=1" width="800">
 
 ### Contributing
-* Bug reports and pull requests are welcome on GitHub at https://github.com/isonic1/Appium-Native-Crawler/issues. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+* Bug reports and pull requests are welcome on GitHub at https://github.com/isonic1/Appium-Native-Crawler/issues. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](https://github.com/isonic1/Appium-Native-Crawler/blob/master/CODE_OF_CONDUCT.md) code of conduct.
 * Pull Request are highly welcomed and encouraged! See TODO's for list of things to be done.
 
 ### TODO's
