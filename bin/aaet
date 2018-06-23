@@ -18,13 +18,13 @@ command :crawler do |c|
   c.option '-l', '--language LANGUAGE', Array, 'Set languages(s): e.g. -l "en" or -l "en de ar" Default: en'
   c.option '-u', '--uuid UUID', Array, 'Set Real Device UUID. e.g. --uuid IBZ5AQMBCY7DHASK or Array as -u "UUID1 UUID2"'
   #Boolean options. Only pass the argument (e.g. --debug) to set to true. Otherwise they are all false by default.
-  c.option '--keepEmulatorAlive', "Keep emulator running after crawl. e.g. --keepEmulatorAlive. Default: false"
+  c.option '--keepEmulatorAlive', "Keep emulator running after crawl. e.g. --keepEmulatorAlive"
   c.option '--bothOrientations', "If running in parallel with multiple devices. Tell Crawler to run both Orientations, if available. e.g --bothOrientations"
-  c.option '--translate', 'Translate strings after job finish: e.g. --translate. Default: false'
-  c.option '--applitools', 'Run Applitools Tests. e.g --applitools. Default: false'
-  c.option '--updateBaseline', 'Update Applitools baseline images. e.g. --updateBaseline. Default: false'
-  c.option '--debug', 'Print debug output: e.g. --debug. Default: false'
-  c.option '--resetAppium', 'Reset Appium Session - Reinstall app on startup. e.g. --resetAppium, Default: false'
+  c.option '--translate', 'Translate strings after job finish: e.g. --translate'
+  c.option '--applitools', 'Run Applitools Tests. e.g --applitools'
+  c.option '--updateBaseline', 'Update Applitools baseline images. e.g. --updateBaseline'
+  c.option '--debug', 'Print debug output: e.g. --debug'
+  c.option '--resetAppium', 'Reset Appium Session - Reinstall app on startup or restart. e.g. --resetAppium'
   c.option '--cloud', 'Crawl in cloud. e.g. --cloud. Default: false. Make sure your cloud settings are set in [cloud] and caps is pointed to a config/toml file'
   c.action do |args, options|
     options.default \
@@ -74,10 +74,10 @@ command :monkey do |c|
   c.option '-u', '--uuid UUID', Array, 'Set Device UUID. e.g. --uuid IBZ5AQMBCY7DHASK or Array as -u "IBZ5AQMBCY7DHASK skso9eosdlldfjs'
   c.option '-o', '--orientation ORIENTATION', String, 'Set devices orientation: e.g. -o landscape'
   #Boolean options. Only pass the argument (e.g. --debug) to set to true. Otherwise they are all false by default.
-  c.option '--keepEmulatorAlive', "Keep emulator running after crawl. e.g. --keepEmulatorAlive. Default: false"
+  c.option '--keepEmulatorAlive', "Keep emulator running after crawl. e.g. --keepEmulatorAlive"
   c.option '--bothOrientations', "If running in parallel with multiple devices. Tell Crawler to run both Orientations, if available. e.g --bothOrientations"
-  c.option '--debug', 'Print debug output: e.g. --debug. Default: false'
-  c.option '--resetAppium', 'Reset Appium Session - Reinstall app on startup. e.g. --resetAppium, Default: false'
+  c.option '--debug', 'Print debug output: e.g. --debug'
+  c.option '--resetAppium', 'Reset Appium Session - Reinstall app on startup. e.g. --resetAppium'
   c.option '--cloud', 'Crawl in cloud. e.g. --cloud. Default: false. Make sure your cloud settings are set in [cloud] and caps is pointed to a config/toml file'
   c.action do |args, options|
     options.default \
@@ -123,8 +123,8 @@ command :replay do |c|
   c.option '-s', '--seconds SECONDS', Integer, 'Set Max Runtime in Seconds: e.g. -s 300 (for 5 minutes). Crawler will run until the replay steps are finished or this value'
   c.option '-c', '--config CONFIG', String, 'Set config file location: e.g. -c myAppConfig.txt'
   #Boolean options. Only pass the argument (e.g. --debug) to set to true. Otherwise they are all false by default.
-  c.option '--keepEmulatorAlive', "Keep emulator running after crawl. e.g. --keepEmulatorAlive. Default: false"
-  c.option '--debug', 'Print debug output: e.g. --debug. Default: false'
+  c.option '--keepEmulatorAlive', "Keep emulator running after crawl. e.g. --keepEmulatorAlive"
+  c.option '--debug', 'Print debug output: e.g. --debug'
 
   c.action do |args, options|
     options.default \
