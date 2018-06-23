@@ -36,7 +36,7 @@ I have only tested this on OSX and Linux environments but it will need some refa
 * All Appium Dependencies Installed. See [here](https://github.com/isonic1/appium-workshop/blob/master/Appium%20Mac%20Installation%20Instructions.md) or goto [here](http://appium.io/docs/en/about-appium/getting-started/)
 * Appium CLI installed via node npm. e.g ```npm install -g appium```
 * Redis server installed and started. e.g. ```brew install redis```
-    * Make sure you set the Redis server to always start on bootup.
+    * Make sure you set the Redis server to always start on bootup. e.g. ```brew services start redis```
     
 # Gem Installation
 * via rubygems.org ```gem install aaet```
