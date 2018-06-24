@@ -119,7 +119,7 @@ I have only tested this on OSX and Linux environments but it will need some refa
     
 * Note: The --config/-c can reference any file path. So if you have multple apps or versions you can configure your folder/file structure accordingly.
 * Debugging: Passing --debug will print out a lot of debugging output. One such debugging output are the instance variables set which are derived dynamically based on the config and command line arguments/options and then passed into each class. See [here](https://github.com/isonic1/Appium-Native-Crawler/blob/master/run.rb#L46-L63) for example.
-* Definitely look at the --help menu for each option (crawler, replay, monkey). This will tell you all the available arguments you can use. Also, look at the code for further reference!
+* Definitely look at the --help menu for each option (crawler, replay, monkey) & ```aaet --help```. This will tell you all the available arguments you can use. Also, look at the code for further reference!
 
 ### Crawling Your App
 * Can your application be automated by Appium? Make sure you can actually run automation on your app with Appium before proceeding. Some apps have security settings to block automation or screenshot captures.
