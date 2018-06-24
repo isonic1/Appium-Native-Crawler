@@ -174,4 +174,4 @@ I have only tested this on OSX and Linux environments but it will need some refa
 * Report generation
 
 ### License
-(Apache 2.0)[https://github.com/isonic1/Appium-Native-Crawler/blob/master/LICENSE]
+[Apache 2.0](https://github.com/isonic1/Appium-Native-Crawler/blob/master/LICENSE)
