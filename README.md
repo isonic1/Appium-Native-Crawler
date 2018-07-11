@@ -32,7 +32,7 @@ I have only tested this on OSX and Linux environments but it will need some refa
 ### Requirements before using
 * Ruby 2.2 or greater (I have not tested this with Ruby 2.5 but I assume it will work)
     * I highly recommend installing RVM or RBENV.
-    * Install Ruby devkit or GCC C++ Dependencies (e.g. on osx: xcode-select --install). Basically, just make sure you can install the json gem. e.g. ```gem install json```
+    * Install Ruby devkit or GCC Dependencies (e.g. on osx: xcode-select --install). Basically, just make sure you can install the json gem. e.g. ```gem install json```
         * If you get an error installing the above json gem, Google on how to fix it on your machine before proceeding.
 * Android SDK Installed. See [here](https://www.androidcentral.com/installing-android-sdk-windows-mac-and-linux-tutorial)
 * All Appium Dependencies Installed. See [here](https://github.com/isonic1/appium-workshop/blob/master/Appium%20Mac%20Installation%20Instructions.md) or goto [here](http://appium.io/docs/en/about-appium/getting-started/)
