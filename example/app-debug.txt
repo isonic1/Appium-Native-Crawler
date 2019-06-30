@@ -9,7 +9,7 @@
     url               = "http://localhost:4723/wd/hub"
     appPackage        = "com.amazonaws.devicefarm.android.referenceapp"
     newCommandTimeout = "9999"
-    locale            = "en_US"
+    locale            = "en"
 
 #(choices: only saucelabs for now. Add your user, key, and capabilities file location here...)
 [cloud]
